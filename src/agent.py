@@ -147,7 +147,7 @@ def summarization_agent(state: AgentState, config: RunnableConfig) -> AgentState
         "chat_history": state.get("messages", []),
     }).to_messages()
 
-    result, tools_used = invoke_react_agent(AnswerResponse, messages, llm, tools)
+    result, tools_used = invoke_react_agent(SummarizationResponse, messages, llm, tools)
 
     return {
         "messages": result.get("messages", []),
@@ -172,7 +172,7 @@ def calculation_agent(state: AgentState, config: RunnableConfig) -> AgentState:
         "chat_history": state.get("messages", []),
     }).to_messages()
 
-    result, tools_used = invoke_react_agent(AnswerResponse, messages, llm, tools)
+    result, tools_used = invoke_react_agent(CalculationResponse, messages, llm, tools)
 
     return {
         "messages": result.get("messages", []),
