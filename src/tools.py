@@ -68,7 +68,7 @@ def create_calculator_tool(logger: ToolLogger):
     """
     # Your implementation here
     @tool
-    def calculator(expression: str) -> float:
+    def calculator(expression: str) -> str:
         """
         Safely evaluate a mathematical expression and log its usage.
 
@@ -79,10 +79,13 @@ def create_calculator_tool(logger: ToolLogger):
             The result of the evaluated expression
         """
         try:
+            # Validate the expression only contains safe characters (digits, operators, parentheses, whitespace)
+            if not re.match(r"^[0-9+\-*/().\s]+$", expression):
+                raise ValueError("Invalid characters in expression")
             # Use eval with a restricted environment for safety
             result = eval(expression, {"__builtins__": {}})
             logger.log_tool_use("calculator", {"expression": expression}, result)
-            return result
+            return str(result) # Return result as string
         except Exception as e:
             logger.log_tool_use("calculator", {"expression": expression}, f"Error: {e}")
             raise
