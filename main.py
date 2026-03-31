@@ -52,7 +52,7 @@ def list_documents(assistant: DocumentAssistant):
 def main():
     """Main interactive loop"""
     # Load environment variables
-    load_dotenv()
+    load_dotenv(override=True)
 
     # Get API key
     api_key = os.getenv("OPENAI_API_KEY")

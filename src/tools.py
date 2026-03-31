@@ -67,7 +67,27 @@ def create_calculator_tool(logger: ToolLogger):
     Creates a calculator tool - TO BE IMPLEMENTED
     """
     # Your implementation here
-    pass
+    @tool
+    def calculator(expression: str) -> float:
+        """
+        Safely evaluate a mathematical expression and log its usage.
+
+        Args:
+            expression: A string containing a mathematical expression (e.g., "2 + 3 * 4")
+
+        Returns:
+            The result of the evaluated expression
+        """
+        try:
+            # Use eval with a restricted environment for safety
+            result = eval(expression, {"__builtins__": {}})
+            logger.log_tool_use("calculator", {"expression": expression}, result)
+            return result
+        except Exception as e:
+            logger.log_tool_use("calculator", {"expression": expression}, f"Error: {e}")
+            raise
+
+    return calculator
 
 
 def create_document_search_tool(retriever, logger: ToolLogger):
